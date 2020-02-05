@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="array_subcategory_vegetable">
+        <item></item>
+    </array>
+    <array name="array_subcategory_fruit">
+        <item></item>
+    </array>
+    <array name="array_subcategory_grains_beans_and_nuts">
+        <item></item>
+    </array>
+    <array name="array_subcategory_fish_and_seafood">
+        <item></item>
+    </array>
+    <array name="array_subcategory_dairy">
+        <item></item>
+    </array>
+    <array name="array_subcategory_meat_and_poultry">
+        <item></item>
+    </array>
+</resources>

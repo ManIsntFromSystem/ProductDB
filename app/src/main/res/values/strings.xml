@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ProductsDB</string>
+    <string name="edit_product_name">Edit Product</string>
 </resources>
