@@ -2,6 +2,7 @@ package com.example.productsdb;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 import androidx.loader.app.LoaderManager;
@@ -10,6 +11,7 @@ import androidx.loader.content.Loader;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -126,6 +128,7 @@ public class AddMemberActivity extends AppCompatActivity implements
                 saveProducts();
                 return true;
             case R.id.deleteMember:
+                showDeleteProductDialog();
                 return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
@@ -189,24 +192,6 @@ public class AddMemberActivity extends AppCompatActivity implements
             }
         }
 
-    }
-
-    private void addSpinnerArrayCategory(){
-        spinnerArrayList = new ArrayList();
-        spinnerArrayList.add("Vegetable");
-        spinnerArrayList.add("Fruit");
-        spinnerArrayList.add("Grains, Beans and Nuts");
-        spinnerArrayList.add("Fish and Seafood");
-        spinnerArrayList.add("Dairy");
-        spinnerArrayList.add("Meat and Poultry");
-        spinnerArrayList.add("Other");
-
-        spinnerAdapter = new ArrayAdapter(this,
-                android.R.layout.simple_spinner_item, spinnerArrayList);
-
-        spinnerAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(spinnerAdapter);
     }
 
     @NonNull
@@ -284,5 +269,54 @@ public class AddMemberActivity extends AppCompatActivity implements
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
 
+    }
+
+
+    private void addSpinnerArrayCategory(){
+        spinnerArrayList = new ArrayList();
+        spinnerArrayList.add("Vegetable");
+        spinnerArrayList.add("Fruit");
+        spinnerArrayList.add("Grains, Beans and Nuts");
+        spinnerArrayList.add("Fish and Seafood");
+        spinnerArrayList.add("Dairy");
+        spinnerArrayList.add("Meat and Poultry");
+        spinnerArrayList.add("Other");
+
+        spinnerAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, spinnerArrayList);
+
+        spinnerAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(spinnerAdapter);
+    }
+
+    private void showDeleteProductDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Would do you delete the product?");
+        builder.setPositiveButton("Delete", (dialog, which) -> {
+                    deleteProduct();
+                });
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            if(dialog != null){
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    private void deleteProduct(){
+        if(currentProductUri != null){
+            int rowsDeleted = getContentResolver().delete(currentProductUri,
+                    null, null);
+
+            if (rowsDeleted == 0){
+                Toast.makeText(this, "Deleting wasn't successful",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Deleting is successful",
+                        Toast.LENGTH_LONG).show();
+            }
+            finish();
+        }
     }
 }
