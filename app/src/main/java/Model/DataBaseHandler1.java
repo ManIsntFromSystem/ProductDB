@@ -1,4 +1,4 @@
-package Data;
+package Model;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,15 +12,16 @@ import java.util.List;
 import Model.Product;
 import com.example.productsdb.data.HealthyProductsContract;
 
-public class DataBaseHandler  extends SQLiteOpenHelper {
-    public DataBaseHandler(Context context) {
+public class DataBaseHandler1 {
+    //extends SQLiteOpenHelper
+    /*public DataBaseHandler(Context context) {
         super(context, HealthyProductsContract.DATABASE_NAME, null, HealthyProductsContract.DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         //SQL = structured query language
-        String CREATE_CARS_TABLE = "CREATE TABLE " + HealthyProductsContract.TABLE_NAME + "(" +
+        String CREATE_PRODUCTS_TABLE = "CREATE TABLE " + HealthyProductsContract.TABLE_NAME + "(" +
                 HealthyProductsContract.KEY_ID + " INTEGER PRIMARY KEY, " +
                 HealthyProductsContract.KEY_NAME + " TEXT, " +
                 HealthyProductsContract.KEY_PRICE + " TEXT" + ")";
@@ -111,5 +112,5 @@ public class DataBaseHandler  extends SQLiteOpenHelper {
         String countQuery = "SELECT * FROM " + HealthyProductsContract.TABLE_NAME;
         Cursor cursor = db.rawQuery(countQuery, null);
         return cursor.getCount();
-    }
+    }*/
 }
