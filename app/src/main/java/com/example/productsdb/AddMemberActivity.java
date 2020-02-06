@@ -68,9 +68,8 @@ public class AddMemberActivity extends AppCompatActivity implements
             setTitle("Add new Product");
         } else {
             setTitle("Edit the Member");
+            getSupportLoaderManager().initLoader(PRODUCT_LOADER, null, this);
         }
-
-        getSupportLoaderManager().initLoader(PRODUCT_LOADER, null, this);
 
         addSpinnerArrayCategory();
         /*spinnerAdapter = ArrayAdapter.createFromResource(this,
@@ -142,6 +141,23 @@ public class AddMemberActivity extends AppCompatActivity implements
         double caloriesProd = Double.valueOf(editTextСalories.getText().toString());
         double priceProd = Double.valueOf(editTextPrice.getText().toString());
 
+        if (TextUtils.isEmpty(nameProd)){
+            Toast.makeText(this, "Input the name",
+                    Toast.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(descriptionProd)){
+            Toast.makeText(this, "Input the description",
+                    Toast.LENGTH_LONG).show();
+        } else if (category == MemberEntry.CATEGORY_OTHER){
+            Toast.makeText(this, "Choose the category",
+                    Toast.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(String.valueOf(caloriesProd))){
+            Toast.makeText(this, "Input the calories data",
+                    Toast.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(String.valueOf(priceProd))){
+            Toast.makeText(this, "Input the price",
+                    Toast.LENGTH_LONG).show();
+        }
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(MemberEntry.COLUMN_NAME, nameProd);
         contentValues.put(MemberEntry.COLUMN_DESCRIPTION, descriptionProd);
@@ -149,17 +165,28 @@ public class AddMemberActivity extends AppCompatActivity implements
         contentValues.put(MemberEntry.COLUMN_CALORIES, caloriesProd);
         contentValues.put(MemberEntry.COLUMN_PRICE, priceProd);
 
-        ContentResolver contentResolver = getContentResolver();
-        Log.d("ContentResolver", "URI: " + MemberEntry.CONTENT_URI);
-        Log.i("ContentResolver", "URI: " + contentValues);
-        Uri uri = contentResolver.insert(MemberEntry.CONTENT_URI, contentValues);
+        if (currentProductUri == null) {
+            ContentResolver contentResolver = getContentResolver();
+            Uri uri = contentResolver.insert(MemberEntry.CONTENT_URI, contentValues);
 
-
-
-        if(uri == null){
-            Toast.makeText(this, "Insertion of data in the table failed", Toast.LENGTH_LONG).show();
+            if (uri == null) {
+                Toast.makeText(this, "Insertion of data in the table failed",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Insertion of data is successful",
+                        Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(this, "Insertion of data is successful", Toast.LENGTH_LONG).show();
+            int rowsChanged = getContentResolver().update(currentProductUri,contentValues,
+                    null, null);
+
+            if (rowsChanged == 0) {
+                Toast.makeText(this, "Updated of data in the table failed",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Updating is successful",
+                        Toast.LENGTH_LONG).show();
+            }
         }
 
     }
