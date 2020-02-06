@@ -68,6 +68,7 @@ public class AddMemberActivity extends AppCompatActivity implements
 
         if(currentProductUri == null){
             setTitle("Add new Product");
+            invalidateOptionsMenu();
         } else {
             setTitle("Edit the Member");
             getSupportLoaderManager().initLoader(PRODUCT_LOADER, null, this);
@@ -113,6 +114,17 @@ public class AddMemberActivity extends AppCompatActivity implements
                 category = MemberEntry.CATEGORY_OTHER;
             }
         });
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        if (currentProductUri == null){
+            MenuItem menuItem= menu.findItem(R.id.deleteMember);
+            menuItem.setVisible(false);
+        }
+        return true;
     }
 
     @Override
